@@ -62,3 +62,6 @@ def get_calendar(user_id: str):
             "Content-Disposition": "attachment; filename=schedule.ics"
         }
     )
+
+def get_all_users():
+    return storage.load_users()

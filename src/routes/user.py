@@ -20,3 +20,7 @@ def update_availability(user_id: str, availability: Availability):
 @router.get("/users/{user_id}/calendar")
 def get_calendar(user_id: str):
     return user_controller.get_calendar(user_id)
+
+@router.get("/users", response_model=List[User])
+def get_all_users_route():
+    return user_controller.get_all_users()  
