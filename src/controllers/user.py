@@ -63,6 +63,28 @@ def get_calendar(user_id: str):
         }
     )
 
+def get_appointments(user_id: str):
+    users = storage.load_users()
+    user_data = next((u for u in users if u["id"] == user_id), None)
+    if not user_data:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    user_appointments_ids = user_data.get("appointments", [])
+
+    appointments = storage.load("appointments")
+
+    user_appointments = []
+
+    for appointment in appointments:
+        for id in user_appointments_ids:
+            if appointment["id"] == id:
+                user_appointments.append(appointment)
+
+
+    
+
+    return user_appointments
+
 def get_all_users():
     print( "Loading all users..." )
     return storage.load_users()

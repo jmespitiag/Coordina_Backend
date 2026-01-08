@@ -17,9 +17,13 @@ def create_user(user: UserCreate):
 def update_availability(user_id: str, availability: Availability):
     return user_controller.set_availability(user_id, availability)
 
-@router.get("/users/{user_id}/calendar")
+@router.get("/{user_id}/calendar")
 def get_calendar(user_id: str):
     return user_controller.get_calendar(user_id)
+
+@router.get("/{user_id}/appointments")
+def get_appointments(user_id: str):
+    return user_controller.get_appointments(user_id)
 
 @router.get("/all")
 def get_all_users_route():
