@@ -11,4 +11,3 @@ class User(BaseModel):
 
 class UserCreate(BaseModel):
     name: str
-    appointments: Optional[List[Appointment]] = []

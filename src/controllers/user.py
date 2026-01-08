@@ -64,4 +64,5 @@ def get_calendar(user_id: str):
     )
 
 def get_all_users():
+    print( "Loading all users..." )
     return storage.load_users()
