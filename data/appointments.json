@@ -12,5 +12,18 @@
             "21cb5356-5207-4df9-9fd5-45a1e3c584f5"
         ],
         "location": "El social"
+    },
+    {
+        "id": "3a9d5818-5b96-48f4-bc69-0d355f601cae",
+        "title": "Baile de fin de año",
+        "date": "2026-01-06",
+        "week": 1,
+        "start": "11:00:00",
+        "end": "12:00:00",
+        "host_id": "050945ad-6542-4577-93a1-72a17727551d",
+        "participants_id": [
+            "050945ad-6542-4577-93a1-72a17727551d"
+        ],
+        "location": "La plaza"
     }
 ]

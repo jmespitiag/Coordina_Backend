@@ -5,33 +5,33 @@ from uuid import uuid4
 from datetime import date, datetime, time
 import re
 
+# Service for saving and loading JSON data with date serialization
 class StorageService:
     def __init__(self):
         self.base_path = Path('data')
         self.base_path.mkdir(parents=True, exist_ok=True)
 
-        # Archivos por recurso
+        # Files for different resources
         self.files = {
             "users": self.base_path / "users.json",
             "appointments": self.base_path / "appointments.json"
         }
 
-        # Inicializa los archivos si no existen
+        #
         for f in self.files.values():
             if not f.exists():
                 f.write_text("[]")
 
-    # --- Lectura ---
+    # --- Reading ---
     def load(self, resource: str) -> list[dict]:
         file_path = self.files[resource]
         with open(file_path, "r", encoding="utf-8") as f:
             return json.load(f)
 
-    # --- Escritura ---
+    # --- Writing ---
     def save(self, resource: str, data: list[dict]):
         file_path = self.files[resource]
         with open(file_path, "w", encoding="utf-8") as f:
-            # AQUÍ ESTÁ EL CAMBIO: agregamos 'default'
             json.dump(
                 data,
                 f,
@@ -41,14 +41,14 @@ class StorageService:
             )
 
 
-    # --- Métodos específicos ---
+        # --- Specific methods ---
     def load_users(self) -> list[dict]:
         return self.load("users")
 
     def save_users(self, users: list[dict]):
         self.save("users", users)
 
-    # Generar un id único automáticamente
+
     def generate_id(self) -> str:
         return str(uuid4())
 

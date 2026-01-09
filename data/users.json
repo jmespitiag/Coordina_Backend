@@ -2,9 +2,6 @@
     {
         "id": "21cb5356-5207-4df9-9fd5-45a1e3c584f5",
         "name": "Ferxxo",
-        "schedule": {
-            "appointments": []
-        },
         "appointments": [
             "3a9d5818-5b96-48f4-bc69-0d355f601cae"
         ],
@@ -71,9 +68,6 @@
     {
         "id": "050945ad-6542-4577-93a1-72a17727551d",
         "name": "Karol G",
-        "schedule": {
-            "appointments": []
-        },
         "appointments": [
             "3a9d5818-5b96-48f4-bc69-0d355f601cae"
         ],

@@ -7,10 +7,12 @@ from src.utils.time_utils import time_to_minutes, minutes_to_time
 
 DAYS = ["monday","tuesday","wednesday","thursday","friday","saturday","sunday"]
 
+# Get all appointments for a user in a specific week and year
 def get_appointments_for_user_and_week(user_id: str, week: int, year: int = 2026):
     appointments = storage.load("appointments")
     result = []
 
+    
     for appt in appointments:
         if user_id not in appt["participants_id"]:
             continue
@@ -23,21 +25,20 @@ def get_appointments_for_user_and_week(user_id: str, week: int, year: int = 2026
 
     return result
 
+#
 def subtract_block(free_start, free_end, busy_start, busy_end):
     """
-    Todos los intervalos como [start, end)
-    en minutos
+    Subtract a busy time block from a free time block.
     """
     fs = time_to_minutes(free_start)
     fe = time_to_minutes(free_end)
     bs = time_to_minutes(busy_start)
     be = time_to_minutes(busy_end)
 
-    # No intersección
+
     if be <= fs or bs >= fe:
         return [(free_start, free_end)]
 
-    # Busy cubre todo
     if bs <= fs and be >= fe:
         return []
 
@@ -51,6 +52,7 @@ def subtract_block(free_start, free_end, busy_start, busy_end):
 
     return result
 
+# Get effective availability for a user on a specific day subtracting appointments from weekly availability
 def get_effective_availability(
     weekly_availability,
     appointments,
@@ -92,7 +94,7 @@ def split_block(start: str, end: str, duration):
     slots = []
     fmt = "%H:%M"
 
-    # Si duration es un objeto time (ej. 00:30:00), conviértelo a minutos
+
     if hasattr(duration, 'hour'):
         duration_mins = duration.hour * 60 + duration.minute
     else:
@@ -101,7 +103,7 @@ def split_block(start: str, end: str, duration):
     current = datetime.strptime(start, fmt)
     end_dt = datetime.strptime(end, fmt)
 
-    # Usa duration_mins en lugar de duration
+
     while current + timedelta(minutes=duration_mins) <= end_dt:
         slot_end = current + timedelta(minutes=duration_mins)
         slots.append({
@@ -112,7 +114,7 @@ def split_block(start: str, end: str, duration):
 
     return slots
 
-
+# Propose appointment slots based on participants' availability
 def propose_appointments(
     participants_id: list[str],
     week: int,
@@ -127,7 +129,7 @@ def propose_appointments(
 
     selected_days = days if days else DAYS
 
-    # 🧱 Disponibilidad efectiva por usuario
+    # Effective availability per user
     weekly_blocks_per_user = []
 
     for user_id in participants_id:
@@ -161,7 +163,7 @@ def propose_appointments(
 
         weekly_blocks_per_user.append(effective_week)
 
-    # 🧠 Intersección entre usuarios
+    # Intersect availability across users
     results = {}
 
     for day in selected_days:
